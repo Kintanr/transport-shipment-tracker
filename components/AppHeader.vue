@@ -1,6 +1,6 @@
 <template>
-  <div class="h-20">
-    <div class="flex justify-between p-7">
+  <div class="h-20 border-b-[2px] border-neutral-200">
+    <div class="flex justify-between px-7 py-5">
       <!-- <div> -->
       <img src="/images/jeje-logo.png" class="object-cover" width="100" />
       <!-- </div> -->

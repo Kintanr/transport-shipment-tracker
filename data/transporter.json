@@ -1,0 +1,60 @@
+[
+  {
+    "id" : "1",
+    "name" : "CDE (Colt Diesel Engkel)",
+    "area"  : [
+      "Jawa",
+      "Bali",
+      "Sumatera"
+    ],
+    "capacity" : "5",
+    "load_capacity" : "2,5 Ton"
+  },
+  {
+    "id" : "2",
+    "name" : "CDD (Colt Diesel Dobel)",
+    "area"  : [
+      "Jawa",
+      "Bali",
+      "Sumatera"
+    ],
+    "capacity" : "20",
+    "load_capacity" : "4 Ton"
+  },
+  {
+    "id" : "3",
+    "name" : "FUSO",
+    "area"  : [
+      "Jawa",
+      "Bali",
+      "Sumatera"
+    ],
+    "capacity" : "10",
+    "load_capacity" : "8 Ton"
+  },
+  {
+    "id" : "4",
+    "name" : "TRONTON (WING BOX)",
+    "area"  : [
+      "Jawa",
+      "Bali",
+      "Sumatera"
+    ],
+    "capacity" : "5",
+    "load_capacity" : "14 Ton"
+  },
+  {
+    "id" : "5",
+    "name" : "BlindVan",
+    "area"  : [],
+    "capacity" : null,
+    "load_capacity" : "800 Kg"
+  },
+  {
+    "id" : "6",
+    "name" : "TRONTON BAK",
+    "area"  : [],
+    "capacity" : null,
+    "load_capacity" : "16 Ton"
+  }
+]
