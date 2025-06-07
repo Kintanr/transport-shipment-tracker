@@ -7,49 +7,50 @@
         <div
           class="rounded-xl p-5 bg-orange-500 col-span-3 md:col-span-1 text-white"
         >
-          <div>
+          <div class="flex justify-between flex-wrap">
             <span class="flex gap-4 font-bold items-center">
               <UIcon name="i-tabler-truck-delivery" class="text-2xl" />
               <span class="text-lg">{{ selectedShipment?.id }}</span>
             </span>
-
-            <div class="">
-              <UStepper
-                color="white"
-                size="xs"
-                disabled
-                :defaultValue="2"
-                :items="[
-                  { title: selectedShipment?.origin, icon: '' },
-                  {
-                    title: selectedShipment?.destination,
-                    icon: 'i-map-map-pin',
-                  },
-                ]"
-                orientation="vertical"
-                class="w-full mt-5"
-              >
-                <template #indicator="{ item }">
-                  <div
-                    v-if="item?.icon"
-                    class="relative flex items-center justify-center size-full text-orange-500"
-                  >
-                    <UIcon :name="item?.icon" class="text-xs" />
-                  </div>
-                  <div v-else></div>
-                </template>
-
-                <template #title="{ item }">
-                  <div class="text-white">
-                    {{ item?.title }}
-                  </div>
-                </template>
-                <template #description>
-                  <div class="my-5"></div>
-                </template>
-              </UStepper>
+            <div class="text-xs text-gray-100 mt-1.5">
+              Last update 06-06-2025 19:20
             </div>
           </div>
+
+          <UStepper
+            color="white"
+            size="xs"
+            disabled
+            :defaultValue="2"
+            :items="[
+              { title: selectedShipment?.origin, icon: '' },
+              {
+                title: selectedShipment?.destination,
+                icon: 'i-map-map-pin',
+              },
+            ]"
+            orientation="vertical"
+            class="w-full mt-5"
+          >
+            <template #indicator="{ item }">
+              <div
+                v-if="item?.icon"
+                class="relative flex items-center justify-center size-full text-orange-500"
+              >
+                <UIcon :name="item?.icon" class="text-xs" />
+              </div>
+              <div v-else></div>
+            </template>
+
+            <template #title="{ item }">
+              <div class="text-white">
+                {{ item?.title }}
+              </div>
+            </template>
+            <template #description>
+              <div class="my-5"></div>
+            </template>
+          </UStepper>
         </div>
 
         <div class="col-span-3 md:col-span-2">
@@ -63,7 +64,7 @@
               selectedShipment?.status
             }}</UBadge>
 
-            <div class="grid grid-cols-2 items-center">
+            <div class="grid md:grid-cols-2 grid-cols-1 gap-6 items-center">
               <img
                 v-if="selectedShipment?.status == 'Assigned'"
                 :src="selectedTransporter?.image"
