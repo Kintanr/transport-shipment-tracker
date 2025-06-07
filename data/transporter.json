@@ -7,6 +7,7 @@
       "Bali",
       "Sumatera"
     ],
+    "image": "/images/cde.png",
     "capacity" : "5",
     "load_capacity" : "2,5 Ton"
   },
@@ -18,6 +19,7 @@
       "Bali",
       "Sumatera"
     ],
+    "image": "/images/cdd.png",
     "capacity" : "20",
     "load_capacity" : "4 Ton"
   },
@@ -29,6 +31,7 @@
       "Bali",
       "Sumatera"
     ],
+    "image": "/images/fuso.png",
     "capacity" : "10",
     "load_capacity" : "8 Ton"
   },
@@ -40,6 +43,7 @@
       "Bali",
       "Sumatera"
     ],
+    "image": "/images/tronton.png",
     "capacity" : "5",
     "load_capacity" : "14 Ton"
   },
@@ -47,6 +51,7 @@
     "id" : "5",
     "name" : "BlindVan",
     "area"  : [],
+    "image": "/images/blindvan.png",
     "capacity" : null,
     "load_capacity" : "800 Kg"
   },
@@ -54,6 +59,7 @@
     "id" : "6",
     "name" : "TRONTON BAK",
     "area"  : [],
+    "image": "/images/tronton_bak.png",
     "capacity" : null,
     "load_capacity" : "16 Ton"
   }

@@ -1,11 +1,11 @@
 <template>
-  <div class="px-15 py-5">
+  <div class="lg:px-15 px-10 py-5">
     <Breadcrumbs :items="breadcrumbsItem" />
 
     <div class="mt-10">
       <div class="font-bold text-2xl">Shipments ({{ allData.length }})</div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4">
         <UCard v-for="data in paginatedData" :key="data.id">
           <div class="flex justify-between flex-wrap">
             <span class="font-bold flex gap-4 items-center">
@@ -44,7 +44,10 @@
             </template>
           </UStepper>
 
-          <NuxtLink to="/shipment/detail">
+          <NuxtLink
+            to="/shipment/detail"
+            @click="shipment.setCurrentShipment(data)"
+          >
             <UButton color="primary" variant="outline" class="mt-5" block>
               Detail
             </UButton>
@@ -63,9 +66,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from "vue";
-
+import { ref, onMounted, computed } from "vue";
 import transporter from "~/data/transporter.json";
+import { useShipmentStore } from "@/stores/shipment";
+
+const shipment = useShipmentStore();
 
 const breadcrumbsItem = [
   { label: "", to: "/", icon: "i-lucide-house" },
@@ -125,12 +130,11 @@ function generateRandomData() {
     if (transporter_capacity != 0) {
       // check data length in the same date using transporter id
       if (
-        transporter_capacity >
         allData.value.filter(
           (v: any) =>
             v.transporter_id === current_transporter?.id &&
             new Date(v.date).getTime() === new Date(date).getTime()
-        ).length
+        ).length > transporter_capacity
       ) {
         // if no more capacity, set null in current transporter
         current_transporter = null;
