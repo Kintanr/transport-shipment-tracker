@@ -2,8 +2,6 @@
   <div>
     <AppHeader />
 
-    <slot />
-
-    <!-- <AppFooter /> -->
+    <NuxtPage />
   </div>
 </template>
