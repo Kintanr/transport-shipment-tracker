@@ -13,7 +13,7 @@
               <span class="text-lg">{{ selectedShipment?.id }}</span>
             </span>
             <div class="text-xs text-gray-100 mt-1.5">
-              Last update 06-06-2025 19:20
+              Last update {{ selectedShipment?.timestamp }}
             </div>
           </div>
 

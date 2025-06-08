@@ -19,7 +19,7 @@
             >
           </div>
           <div class="text-xs text-gray-500 mt-1.5">
-            Last update 06-06-2025 19:20
+            Last update {{ data.timestamp }}
           </div>
 
           <UStepper
@@ -66,7 +66,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onBeforeUnmount } from "vue";
 import { useShipmentStore } from "@/stores/shipment";
 
 const breadcrumbsItem = [
@@ -75,9 +75,17 @@ const breadcrumbsItem = [
 ];
 
 const shipment = useShipmentStore();
+let intervalId: ReturnType<typeof setInterval>;
 
 onMounted(() => {
   shipment.generateRandomData();
+  intervalId = setInterval(() => {
+    shipment.statusUpdate();
+  }, 30000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 
 const allData = computed(() => shipment.allData || []);

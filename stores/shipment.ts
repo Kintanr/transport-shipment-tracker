@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import transporter from "~/data/transporter.json";
+import dayjs from "dayjs";
 
 export const useShipmentStore = defineStore('shipment', () => {
-    interface data {
+  interface data {
+    key: number;
     id: string;
     origin: string;
     date: string;
@@ -11,6 +13,7 @@ export const useShipmentStore = defineStore('shipment', () => {
     status: string;
     transporter_id: string;
     transporter: string;
+    timestamp: string
   }
 
   const status = ["Assigned", "Not Assigned"];
@@ -32,12 +35,12 @@ export const useShipmentStore = defineStore('shipment', () => {
       let current_transporter: any = ref(null);
 
       // looping insert data
-      for (let index = 0; index < 16; index++) {
+      for (let index = 0; index < 50; index++) {
         // set date for each data
-        let date = getRandomDate(new Date("2025-06-06"), new Date("2025-06-08"));
+        let date = getRandomDate(new Date("2025-06-14"), new Date("2025-06-16"));
 
         // get random transporter from json data
-        current_transporter = transporter[Math.floor(Math.random() * 8)] ?? null;
+        current_transporter = transporter[Math.floor(Math.random() * 10)] ?? null;
 
         // get the capacity for validation each date
         let transporter_capacity =
@@ -60,6 +63,7 @@ export const useShipmentStore = defineStore('shipment', () => {
 
         // finalisation to push data
         allData.value.push({
+          key: index,
           id: Math.random().toString(36).substr(2, 9),
           transporter_id: current_transporter?.value ?? null,
           transporter: current_transporter?.label ?? null,
@@ -67,6 +71,7 @@ export const useShipmentStore = defineStore('shipment', () => {
           destination: destination[Math.floor(Math.random() * 6)],
           date: date,
           status: current_transporter?.value ? status[0] : status[1],
+          timestamp: dayjs().format('DD-MM-YYYY HH:mm:ss')
         });
       }
       isInitial.value = true
@@ -114,10 +119,27 @@ export const useShipmentStore = defineStore('shipment', () => {
         allData.value[i].transporter_id = selected_transporter.value ?? null
         allData.value[i].transporter = selected_transporter.label ?? null
         allData.value[i].status = status[0]
+        allData.value[i].timestamp = dayjs().format('DD-MM-YYYY HH:mm:ss')
 
         currentTransporter.value = selected_transporter
       }
   }
 
-  return { currentShipment, currentTransporter, setCurrentShipment,generateRandomData, allData, updateData }
+  function statusUpdate(){
+    let not_assigned_data = allData.value.filter(v => v.status == 'Not Assigned')
+
+    not_assigned_data.map(value => {
+        let new_transport = transporter[Math.floor(Math.random() * 10)]
+
+        allData.value[value.key].transporter_id = new_transport?.value ?? null
+        allData.value[value.key].transporter = new_transport?.label ?? null
+        allData.value[value.key].status = new_transport?.value ? status[0] : status[1]
+        if(new_transport?.value){
+          allData.value[value.key].timestamp = dayjs().format('DD-MM-YYYY HH:mm:ss')
+        }
+        
+    })
+  }
+
+  return { currentShipment, currentTransporter, setCurrentShipment,generateRandomData, allData, updateData , statusUpdate}
 })

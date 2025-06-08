@@ -57,7 +57,7 @@
   },
   {
     "value" : "6",
-    "name" : "TRONTON BAK",
+    "label" : "TRONTON BAK",
     "area"  : [],
     "image": "/images/tronton_bak.png",
     "capacity" : null,
