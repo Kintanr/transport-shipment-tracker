@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import transporter from "~/data/transporter.json";
 
 export const useShipmentStore = defineStore('shipment', () => {
@@ -12,7 +12,7 @@ export const useShipmentStore = defineStore('shipment', () => {
     transporter_id: string;
     transporter: string;
   }
-  
+
   const status = ["Assigned", "Not Assigned"];
   const destination = [
     "Jakarta",
@@ -49,7 +49,7 @@ export const useShipmentStore = defineStore('shipment', () => {
           if (
             allData.value.filter(
               (v: any) =>
-                v.transporter_id === current_transporter?.id &&
+                v.transporter_id === current_transporter?.value &&
                 new Date(v.date).getTime() === new Date(date).getTime()
             ).length > transporter_capacity
           ) {
@@ -61,12 +61,12 @@ export const useShipmentStore = defineStore('shipment', () => {
         // finalisation to push data
         allData.value.push({
           id: Math.random().toString(36).substr(2, 9),
-          transporter_id: current_transporter?.id ?? null,
-          transporter: current_transporter?.name ?? null,
+          transporter_id: current_transporter?.value ?? null,
+          transporter: current_transporter?.label ?? null,
           origin: destination[Math.floor(Math.random() * 6)],
           destination: destination[Math.floor(Math.random() * 6)],
           date: date,
-          status: current_transporter?.id ? status[0] : status[1],
+          status: current_transporter?.value ? status[0] : status[1],
         });
       }
       isInitial.value = true
@@ -82,7 +82,6 @@ export const useShipmentStore = defineStore('shipment', () => {
     const randomTime = startTime + Math.random() * (endTime - startTime);
     return new Date(randomTime).toISOString().split("T")[0];
   }
-
 
   interface datas {
     id: string;
@@ -101,11 +100,30 @@ export const useShipmentStore = defineStore('shipment', () => {
   function setCurrentShipment(data: datas): void{
     currentShipment.value = data
     if(data.transporter_id != null){
-      currentTransporter.value = transporter.find((v:any) => v.id == data.transporter_id)
+      currentTransporter.value = transporter.find((v:any) => v.value == data.transporter_id)
     } else {
       currentTransporter.value = {}
     }
   }
 
-  return { currentShipment, currentTransporter, setCurrentShipment,generateRandomData, allData }
+  function updateData(id: any, transport_id:any){
+    const selected_transporter = transporter.find(val => val.value == transport_id.value) ?? {}
+    
+    const i = allData.value.findIndex(item => item.id === id)
+     if (i !== -1) {
+        allData.value[i].transporter_id = selected_transporter.value ?? null
+        allData.value[i].transporter = selected_transporter.label ?? null
+        allData.value[i].status = status[0]
+
+        currentTransporter.value = selected_transporter
+      }
+
+      console.log('this is index', i)
+      console.log('this is all data', allData)
+      console.log('this is current', currentTransporter)
+
+      
+  }
+
+  return { currentShipment, currentTransporter, setCurrentShipment,generateRandomData, allData, updateData }
 })

@@ -48,7 +48,7 @@
               </div>
             </template>
             <template #description>
-              <div class="my-5"></div>
+              <div class="my-8"></div>
             </template>
           </UStepper>
         </div>
@@ -58,7 +58,7 @@
             <span
               v-if="selectedShipment?.status == 'Assigned'"
               class="font-bold"
-              >{{ selectedTransporter?.name }}</span
+              >{{ selectedTransporter?.label }}</span
             >
             <UBadge v-else color="error" variant="outline">{{
               selectedShipment?.status
@@ -70,7 +70,10 @@
                 :src="selectedTransporter?.image"
                 width="200"
               />
-              <img v-else src="/images/truck.png" width="200" />
+              <div v-else>
+                <img src="/images/truck.png" width="200" />
+                <UButton @click="open = true">Assign Transporter</UButton>
+              </div>
 
               <div
                 class="flex flex-col gap-5"
@@ -116,7 +119,7 @@
                   </span>
                   <div>
                     <div class="font-semibold text-md">
-                      <template v-if="selectedTransporter?.area.length">
+                      <template v-if="selectedTransporter?.area?.length">
                         <span
                           v-for="(area, key) in selectedTransporter?.area"
                           :key="key"
@@ -139,12 +142,35 @@
         </div>
       </div>
     </div>
+
+    <UModal v-model:open="open" title="Assign Transporter">
+      <template #body>
+        <USelect
+          v-model="choosenTransporter"
+          :color="formErrors.choosenTransporter ? 'error' : ''"
+          :highlight="formErrors.choosenTransporter ? true : false"
+          :items="transporter"
+          class="w-full"
+        />
+        <p v-if="formErrors.choosenTransporter" class="text-red-500 text-sm">
+          {{ formErrors.choosenTransporter }}
+        </p>
+      </template>
+      <template #footer>
+        <div class="flex gap-2 justify-end w-full">
+          <UButton color="neutral" label="cancel" @click="close()" />
+          <UButton label="Save" color="success" @click="submit()" />
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from "vue";
 import { useShipmentStore } from "@/stores/shipment";
 import { useRouter } from "vue-router";
+import transporter from "~/data/transporter.json";
 
 const breadcrumbsItem = [
   { label: "", to: "/", icon: "i-lucide-house" },
@@ -155,9 +181,34 @@ const breadcrumbsItem = [
 const shipment = useShipmentStore();
 
 let selectedShipment = shipment.currentShipment;
-let selectedTransporter = shipment.currentTransporter;
+let selectedTransporter = computed(() => shipment.currentTransporter || {});
 
 const router = useRouter();
+
+let choosenTransporter = ref(null);
+let open = ref(false);
+let formErrors = ref({});
+
+function close() {
+  open.value = false;
+  choosenTransporter.value = null;
+}
+
+function submit() {
+  formErrors.value = {};
+
+  if (!choosenTransporter.value) {
+    formErrors.value.choosenTransporter = "Transporter harus dipilih.";
+  } else {
+    shipment.updateData(selectedShipment.id, choosenTransporter);
+  }
+}
+
+watch(choosenTransporter, (newVal) => {
+  if (newVal) {
+    formErrors.value.choosenTransporter = null;
+  }
+});
 
 onMounted(() => {
   if (!selectedShipment.id) {
