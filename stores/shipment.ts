@@ -117,12 +117,6 @@ export const useShipmentStore = defineStore('shipment', () => {
 
         currentTransporter.value = selected_transporter
       }
-
-      console.log('this is index', i)
-      console.log('this is all data', allData)
-      console.log('this is current', currentTransporter)
-
-      
   }
 
   return { currentShipment, currentTransporter, setCurrentShipment,generateRandomData, allData, updateData }

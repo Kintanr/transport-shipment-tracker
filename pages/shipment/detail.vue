@@ -184,6 +184,7 @@ let selectedShipment = shipment.currentShipment;
 let selectedTransporter = computed(() => shipment.currentTransporter || {});
 
 const router = useRouter();
+const toast = useToast();
 
 let choosenTransporter = ref(null);
 let open = ref(false);
@@ -198,9 +199,15 @@ function submit() {
   formErrors.value = {};
 
   if (!choosenTransporter.value) {
-    formErrors.value.choosenTransporter = "Transporter harus dipilih.";
+    formErrors.value.choosenTransporter = "Transporter must be selected.";
   } else {
     shipment.updateData(selectedShipment.id, choosenTransporter);
+    toast.add({
+      title: "Success.",
+      description: "Success add transporter.",
+      color: "success",
+    });
+    open.value = false;
   }
 }
 
