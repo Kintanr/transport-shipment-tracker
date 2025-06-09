@@ -2,7 +2,6 @@
 
 ```
 .
-├── .nuxt/                 # Auto-generated Nuxt build directory (do not edit)
 ├── assets/                # Uncompiled assets (CSS, images, fonts)
 ├── components/            # Vue components (.vue files)
 │   ├── AppHeader.vue      # Reusable Header components
