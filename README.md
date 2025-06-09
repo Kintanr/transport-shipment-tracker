@@ -1,3 +1,28 @@
+## Project Structure
+
+```
+.
+├── .nuxt/                 # Auto-generated Nuxt build directory (do not edit)
+├── assets/                # Uncompiled assets (CSS, images, fonts)
+├── components/            # Vue components (.vue files)
+│   ├── AppHeader.vue      # Reusable Header components
+│   └── Breadcrumbs.vue    # Reusable Breadcrumbs components
+├── data/                  # Json data
+├── layouts/               # Layouts for pages, such as default.vue
+├── pages/                 # Auto-routed Vue pages
+│   ├── shipment/          # Shipment page
+│   │    ├── detail.vue    # Detail page
+│   │    └── index.vue     # Index page for shipment
+│   ├── index.vue          # First loaded page
+│   └── shipment.vue       # Static route
+├── public/                # Static assets
+├── stores/                # Pinia stores
+├── app.config.ts          # App configuration file
+├── nuxt.config.ts         # Nuxt configuration file
+├── tsconfig.json          # TypeScript configuration
+└── package.json           # Project dependencies and scripts
+```
+
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

@@ -102,6 +102,8 @@ export const useShipmentStore = defineStore('shipment', () => {
   let currentShipment : any = ref({})
   let currentTransporter : any = ref({})
 
+
+  // set selected shipment and selected transporter for detail
   function setCurrentShipment(data: datas): void{
     currentShipment.value = data
     if(data.transporter_id != null){
@@ -111,6 +113,7 @@ export const useShipmentStore = defineStore('shipment', () => {
     }
   }
 
+  // update data with the selected transportation
   function updateData(id: any, transport_id:any){
     const selected_transporter = transporter.find(val => val.value == transport_id.value) ?? {}
     
@@ -125,6 +128,7 @@ export const useShipmentStore = defineStore('shipment', () => {
       }
   }
 
+  // update status for Not Assigned data
   function statusUpdate(){
     let not_assigned_data = allData.value.filter(v => v.status == 'Not Assigned')
 
